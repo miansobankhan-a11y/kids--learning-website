@@ -1,36 +1,1544 @@
-# 🌟 My Amazing Body! - Interactive Science Website for Kids
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌟 My Amazing Body! - Science for Class 3</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-light: #e0e7ff;
+      --secondary: #ec4899;
+      --accent: #f59e0b;
+      --success: #10b981;
+      --sky: #0ea5e9;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --radius: 20px;
+    }
 
-A fun, interactive, and colorful human body learning website made specifically for **Class 3 (Grade 3) students**.
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', 'Segoe UI', system-ui, sans-serif;
+    }
 
----
+    body {
+      background: linear-gradient(135deg, #eff6ff 0%, #fdf2f8 50%, #fef3c7 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 50px;
+    }
 
-## 👥 Project Team & Mentions
-* **Created by:** [Your Name / @YourGitHubUsername]
-* **Special Thanks / Project Mentor / Contributor:** @MentionUsernameHere
-  *(Replace `@MentionUsernameHere` with the GitHub username of the person you want to mention!)*
+    /* Header */
+    header {
+      background: white;
+      padding: 20px 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
 
----
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-## 🚀 Live Demo & Features
-- 🚶‍♂️ **Interactive Body Diagram:** Clickable SVG character with numbered hotspots from Head to Feet.
-- 🔊 **Voice Narration (Read Aloud):** Built-in text-to-speech pronunciation and fun facts for young learners.
-- 👀 **The 5 Senses:** Visual cards explaining Sight, Hearing, Smell, Taste, and Touch.
-- 🫀 **Inside My Body (Super Organs):** Grade 3 explanations for Brain, Heart, Lungs, Stomach, Bones, and Muscles.
-- 🎮 **Interactive Quiz ("Who Am I?"):** Multiple-choice questions with instant scoring and encouragement.
-- 🍎 **Healthy Habits Checklist:** Interactive daily tracker to earn a Golden Health Medal.
+    .brand-icon {
+      font-size: 2.2rem;
+      background: #fef08a;
+      border-radius: 50%;
+      width: 54px;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(234, 179, 8, 0.3);
+      animation: float 3s ease-in-out infinite;
+    }
 
----
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
 
-## 🛠️ Tech Stack
-- **HTML5** & **Semantic Elements**
-- **CSS3** (Responsive design, animations, gradients, flexbox/grid)
-- **Vanilla JavaScript** (Speech Synthesis API, DOM manipulation)
-- **Zero dependencies** (100% offline-ready)
+    .brand h1 {
+      font-size: 1.6rem;
+      color: #3b82f6;
+      font-weight: 800;
+    }
 
----
+    .brand p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
 
-## 🌐 How to Host on GitHub Pages (Free)
-1. In your GitHub repository, click on **Settings** (⚙️).
-2. In the left sidebar, click **Pages**.
-3. Under **Build and deployment > Branch**, select `main` (or `master`) and folder `/ (root)`.
-4. Click **Save**. Within 1–2 minutes, your website will be live at `https://<your-username>.github.io/<your-repo-name>/`!
+    .sound-toggle-btn {
+      background: #f1f5f9;
+      border: 2px solid #cbd5e1;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: bold;
+      color: #334155;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .sound-toggle-btn:hover {
+      background: #e2e8f0;
+      transform: scale(1.05);
+    }
+
+    .sound-toggle-btn.active {
+      background: #dbeafe;
+      border-color: #3b82f6;
+      color: #1d4ed8;
+    }
+
+    /* Navigation tabs */
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      max-width: 1000px;
+      margin: 24px auto 16px;
+      padding: 0 16px;
+    }
+
+    .tab-btn {
+      background: white;
+      border: 3px solid #e2e8f0;
+      color: #475569;
+      font-size: 1.05rem;
+      font-weight: bold;
+      padding: 12px 20px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .tab-btn:hover {
+      transform: translateY(-2px);
+      border-color: #93c5fd;
+    }
+
+    .tab-btn.active {
+      background: #3b82f6;
+      color: white;
+      border-color: #2563eb;
+      box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+      transform: translateY(-2px) scale(1.04);
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hero welcome banner */
+    .banner {
+      background: linear-gradient(135deg, #60a5fa, #818cf8);
+      color: white;
+      padding: 24px;
+      border-radius: var(--radius);
+      margin-bottom: 24px;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .banner h2 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .banner p {
+      font-size: 1.1rem;
+      opacity: 0.95;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Interactive Body Explorer Layout */
+    .explorer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .explorer-grid {
+        grid-template-columns: 340px 1fr;
+      }
+    }
+
+    .body-diagram-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 3px solid #f1f5f9;
+    }
+
+    .body-canvas-wrap {
+      position: relative;
+      width: 260px;
+      height: 480px;
+      margin: 10px 0;
+    }
+
+    /* SVG Character Styling */
+    .body-svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.08));
+    }
+
+    /* Interactive Hotspots */
+    .hotspot {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: 32px;
+      height: 32px;
+      background: #f43f5e;
+      color: white;
+      border: 3px solid white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(244, 63, 94, 0.5);
+      transition: all 0.25s ease;
+      animation: pulse 2s infinite;
+    }
+
+    .hotspot:hover, .hotspot.active {
+      background: #ec4899;
+      transform: translate(-50%, -50%) scale(1.3);
+      z-index: 10;
+      box-shadow: 0 0 0 6px rgba(236, 72, 153, 0.3);
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.6); }
+      70% { box-shadow: 0 0 0 10px rgba(244, 63, 94, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
+    }
+
+    /* Quick Pills list */
+    .quick-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      margin-top: 14px;
+    }
+
+    .pill-btn {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .pill-btn:hover {
+      background: #dbeafe;
+      border-color: #60a5fa;
+      color: #1d4ed8;
+    }
+
+    .pill-btn.active {
+      background: #3b82f6;
+      color: white;
+      border-color: #2563eb;
+    }
+
+    /* Detail View Card */
+    .detail-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+      border: 3px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .detail-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-bottom: 16px;
+      border-bottom: 2px dashed #e2e8f0;
+    }
+
+    .detail-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .detail-icon {
+      font-size: 3.2rem;
+      background: #fef3c7;
+      border-radius: 22px;
+      width: 75px;
+      height: 75px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+    }
+
+    .detail-name {
+      font-size: 2rem;
+      color: #1e293b;
+      font-weight: 800;
+    }
+
+    .detail-category {
+      display: inline-block;
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      margin-top: 4px;
+    }
+
+    .speak-btn {
+      background: #10b981;
+      color: white;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      transition: all 0.2s;
+    }
+
+    .speak-btn:hover {
+      background: #059669;
+      transform: scale(1.05);
+    }
+
+    .info-box {
+      background: #f8fafc;
+      border-radius: 16px;
+      padding: 18px;
+      border-left: 6px solid #3b82f6;
+    }
+
+    .info-box h4 {
+      font-size: 1.1rem;
+      color: #3b82f6;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .info-box p {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: #334155;
+    }
+
+    .fun-fact-box {
+      background: #fffbeb;
+      border-radius: 16px;
+      padding: 18px;
+      border-left: 6px solid #f59e0b;
+    }
+
+    .fun-fact-box h4 {
+      font-size: 1.1rem;
+      color: #d97706;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .fun-fact-box p {
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: #78350f;
+    }
+
+    .try-this-box {
+      background: #fdf2f8;
+      border-radius: 16px;
+      padding: 18px;
+      border-left: 6px solid #ec4899;
+    }
+
+    .try-this-box h4 {
+      font-size: 1.1rem;
+      color: #db2777;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .try-this-box p {
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: #831843;
+      font-weight: 600;
+    }
+
+    /* Cards Grid (Senses, Organs) */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .card-item {
+      background: white;
+      border-radius: var(--radius);
+      padding: 24px;
+      border: 3px solid #e2e8f0;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+      border-color: #93c5fd;
+    }
+
+    .card-item-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .card-badge {
+      font-size: 2.5rem;
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f1f5f9;
+    }
+
+    .card-item h3 {
+      font-size: 1.35rem;
+      color: #1e293b;
+    }
+
+    .card-item .subtitle {
+      font-size: 0.85rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    .card-item p {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #475569;
+    }
+
+    .card-item .kid-tip {
+      background: #f0fdf4;
+      border: 1px dashed #86efac;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: #166534;
+      font-weight: 600;
+    }
+
+    .listen-mini-btn {
+      align-self: flex-start;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      color: #334155;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .listen-mini-btn:hover {
+      background: #dbeafe;
+      color: #1d4ed8;
+      border-color: #60a5fa;
+    }
+
+    /* Quiz Container */
+    .quiz-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+      border: 3px solid #e2e8f0;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px dashed #e2e8f0;
+    }
+
+    .quiz-progress {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #6366f1;
+    }
+
+    .quiz-score-pill {
+      background: #fef08a;
+      color: #854d0e;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .quiz-question {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    @media (min-width: 600px) {
+      .quiz-options {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .quiz-opt-btn {
+      background: #f8fafc;
+      border: 2px solid #cbd5e1;
+      padding: 16px 20px;
+      border-radius: 16px;
+      font-size: 1.05rem;
+      font-weight: bold;
+      color: #334155;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s;
+    }
+
+    .quiz-opt-btn:hover {
+      background: #eff6ff;
+      border-color: #3b82f6;
+      transform: translateY(-2px);
+    }
+
+    .quiz-opt-btn.correct {
+      background: #dcfce7 !important;
+      border-color: #22c55e !important;
+      color: #15803d !important;
+    }
+
+    .quiz-opt-btn.wrong {
+      background: #fee2e2 !important;
+      border-color: #ef4444 !important;
+      color: #b91c1c !important;
+    }
+
+    .quiz-feedback {
+      min-height: 50px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      padding: 12px;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .quiz-feedback.show-correct {
+      display: block;
+      background: #f0fdf4;
+      color: #166534;
+      border: 2px solid #86efac;
+    }
+
+    .quiz-feedback.show-wrong {
+      display: block;
+      background: #fef2f2;
+      color: #991b1b;
+      border: 2px solid #fca5a5;
+    }
+
+    .quiz-next-btn {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 999px;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto;
+      transition: all 0.2s;
+      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+    }
+
+    .quiz-next-btn:hover {
+      background: #2563eb;
+      transform: scale(1.05);
+    }
+
+    /* Habits checklist */
+    .habits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .habit-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 3px solid #e2e8f0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .habit-card:hover {
+      border-color: #a7f3d0;
+      transform: translateY(-2px);
+    }
+
+    .habit-card.completed {
+      background: #f0fdf4;
+      border-color: #22c55e;
+    }
+
+    .habit-checkbox {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 3px solid #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: white;
+      background: white;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .habit-card.completed .habit-checkbox {
+      background: #22c55e;
+      border-color: #22c55e;
+    }
+
+    .habit-text h4 {
+      font-size: 1.1rem;
+      color: #1e293b;
+      margin-bottom: 2px;
+    }
+
+    .habit-text p {
+      font-size: 0.9rem;
+      color: #64748b;
+    }
+
+    /* Celebration badge */
+    .stars-reward {
+      background: linear-gradient(135deg, #fef08a, #fde047);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+      margin-top: 30px;
+      border: 3px solid #eab308;
+      box-shadow: 0 8px 20px rgba(234, 179, 8, 0.2);
+    }
+
+    .stars-reward h3 {
+      font-size: 1.5rem;
+      color: #854d0e;
+      margin-bottom: 8px;
+    }
+
+    .stars-reward p {
+      font-size: 1.1rem;
+      color: #a16207;
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #64748b;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">🌟</div>
+      <div>
+        <h1>My Amazing Body</h1>
+        <p>Class 3 Science Adventure</p>
+      </div>
+    </div>
+    <button class="sound-toggle-btn active" id="voiceToggleBtn" onclick="toggleVoice()">
+      <span id="voiceIcon">🔊</span> <span id="voiceStatus">Sound: ON</span>
+    </button>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('explorer')">
+      <span>🚶‍♂️</span> Body Explorer
+    </button>
+    <button class="tab-btn" onclick="switchTab('senses')">
+      <span>👀</span> 5 Senses
+    </button>
+    <button class="tab-btn" onclick="switchTab('organs')">
+      <span>🫀</span> Inside My Body
+    </button>
+    <button class="tab-btn" onclick="switchTab('quiz')">
+      <span>🎮</span> Body Quiz
+    </button>
+    <button class="tab-btn" onclick="switchTab('habits')">
+      <span>🍎</span> Super Habits
+    </button>
+  </div>
+
+  <main>
+    <!-- TAB 1: BODY EXPLORER -->
+    <section id="tab-explorer" class="tab-content active">
+      <div class="banner">
+        <h2>Touch & Learn the Body Parts! 🌟</h2>
+        <p>Click any numbered circle or button below to see what each body part does, hear its name, and try a fun activity!</p>
+      </div>
+
+      <div class="explorer-grid">
+        <!-- Interactive Body Canvas -->
+        <div class="body-diagram-card">
+          <h3 style="color:#1e293b; margin-bottom:8px; font-size:1.15rem;">Click a Circle:</h3>
+          
+          <div class="body-canvas-wrap">
+            <!-- Child SVG Illustration -->
+            <svg class="body-svg" viewBox="0 0 260 480" xmlns="http://www.w3.org/2000/svg">
+              <!-- Background glow -->
+              <ellipse cx="130" cy="460" rx="70" ry="12" fill="#cbd5e1" opacity="0.5"/>
+              
+              <!-- Left Leg -->
+              <rect x="88" y="270" width="30" height="150" rx="15" fill="#3b82f6"/>
+              <!-- Right Leg -->
+              <rect x="142" y="270" width="30" height="150" rx="15" fill="#3b82f6"/>
+              
+              <!-- Shoes -->
+              <ellipse cx="98" cy="425" rx="22" ry="12" fill="#f43f5e"/>
+              <ellipse cx="162" cy="425" rx="22" ry="12" fill="#f43f5e"/>
+
+              <!-- Torso / T-Shirt -->
+              <rect x="75" y="160" width="110" height="120" rx="20" fill="#10b981"/>
+              <!-- Star on shirt -->
+              <path d="M 130 195 L 134 207 L 146 207 L 136 215 L 140 227 L 130 219 L 120 227 L 124 215 L 114 207 L 126 207 Z" fill="#fef08a"/>
+
+              <!-- Left Arm -->
+              <rect x="42" y="170" width="26" height="100" rx="13" fill="#fdba74" transform="rotate(15 42 170)"/>
+              <circle cx="44" cy="280" r="16" fill="#fdba74"/>
+              
+              <!-- Right Arm (waving) -->
+              <rect x="190" y="170" width="26" height="95" rx="13" fill="#fdba74" transform="rotate(-35 190 170)"/>
+              <circle cx="230" cy="140" r="16" fill="#fdba74"/>
+
+              <!-- Neck -->
+              <rect x="116" y="140" width="28" height="25" rx="6" fill="#fed7aa"/>
+
+              <!-- Head -->
+              <ellipse cx="130" cy="95" rx="50" ry="55" fill="#fed7aa"/>
+
+              <!-- Hair -->
+              <path d="M 80 90 Q 75 40 130 40 Q 185 40 180 90 Q 155 58 130 65 Q 105 58 80 90 Z" fill="#78350f"/>
+
+              <!-- Eyes -->
+              <circle cx="112" cy="92" r="6" fill="#1e293b"/>
+              <circle cx="148" cy="92" r="6" fill="#1e293b"/>
+              <circle cx="114" cy="90" r="2" fill="white"/>
+              <circle cx="150" cy="90" r="2" fill="white"/>
+
+              <!-- Cheeks -->
+              <ellipse cx="102" cy="106" rx="8" ry="5" fill="#f43f5e" opacity="0.3"/>
+              <ellipse cx="158" cy="106" rx="8" ry="5" fill="#f43f5e" opacity="0.3"/>
+
+              <!-- Nose -->
+              <path d="M 130 96 L 126 106 L 134 106" stroke="#f97316" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+              <!-- Smiling Mouth -->
+              <path d="M 116 116 Q 130 130 144 116" stroke="#b91c1c" stroke-width="4" stroke-linecap="round" fill="none"/>
+
+              <!-- Ears -->
+              <circle cx="78" cy="95" r="9" fill="#fed7aa"/>
+              <circle cx="182" cy="95" r="9" fill="#fed7aa"/>
+            </svg>
+
+            <!-- Numbered Hotspots -->
+            <button class="hotspot" style="top: 15%; left: 50%;" onclick="selectPart('head')" title="Head">1</button>
+            <button class="hotspot" style="top: 20%; left: 43%;" onclick="selectPart('eyes')" title="Eyes">2</button>
+            <button class="hotspot" style="top: 20%; left: 69%;" onclick="selectPart('ears')" title="Ears">3</button>
+            <button class="hotspot" style="top: 23%; left: 50%;" onclick="selectPart('nose')" title="Nose">4</button>
+            <button class="hotspot" style="top: 26%; left: 50%;" onclick="selectPart('mouth')" title="Mouth">5</button>
+            <button class="hotspot" style="top: 42%; left: 50%;" onclick="selectPart('chest')" title="Chest & Heart">6</button>
+            <button class="hotspot" style="top: 52%; left: 50%;" onclick="selectPart('stomach')" title="Stomach">7</button>
+            <button class="hotspot" style="top: 36%; left: 16%;" onclick="selectPart('hands')" title="Hands & Arms">8</button>
+            <button class="hotspot" style="top: 72%; left: 38%;" onclick="selectPart('knees')" title="Knees & Legs">9</button>
+            <button class="hotspot" style="top: 90%; left: 63%;" onclick="selectPart('feet')" title="Feet">10</button>
+          </div>
+
+          <div class="quick-pills">
+            <button class="pill-btn" onclick="selectPart('head')">Head 🧠</button>
+            <button class="pill-btn" onclick="selectPart('eyes')">Eyes 👀</button>
+            <button class="pill-btn" onclick="selectPart('ears')">Ears 👂</button>
+            <button class="pill-btn" onclick="selectPart('nose')">Nose 👃</button>
+            <button class="pill-btn" onclick="selectPart('mouth')">Mouth 👄</button>
+            <button class="pill-btn" onclick="selectPart('hands')">Hands ✋</button>
+            <button class="pill-btn" onclick="selectPart('chest')">Chest 🫀</button>
+            <button class="pill-btn" onclick="selectPart('stomach')">Stomach 🥣</button>
+            <button class="pill-btn" onclick="selectPart('knees')">Knees 🦵</button>
+            <button class="pill-btn" onclick="selectPart('feet')">Feet 👟</button>
+          </div>
+        </div>
+
+        <!-- Part Details Card -->
+        <div class="detail-card" id="detailCard">
+          <div class="detail-header">
+            <div class="detail-title-wrap">
+              <div class="detail-icon" id="detailIcon">🧠</div>
+              <div>
+                <h3 class="detail-name" id="detailName">Head</h3>
+                <span class="detail-category" id="detailCategory">Top of the Body</span>
+              </div>
+            </div>
+            <button class="speak-btn" onclick="speakCurrent()">
+              <span>🔊</span> Read Aloud
+            </button>
+          </div>
+
+          <div class="info-box">
+            <h4>💡 What does it do?</h4>
+            <p id="detailDesc">The head holds your brain, eyes, ears, nose, and mouth! It sits at the top of your neck and keeps your thinking organ safe inside a strong skull.</p>
+          </div>
+
+          <div class="fun-fact-box">
+            <h4>✨ Fun Fact for Class 3!</h4>
+            <p id="detailFact">Your brain inside your head sends messages faster than a speedy sports car!</p>
+          </div>
+
+          <div class="try-this-box">
+            <h4>🎯 Try This Right Now!</h4>
+            <p id="detailAction">Gently touch the top of your head and nod 3 times to say hello!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: 5 SENSES -->
+    <section id="tab-senses" class="tab-content">
+      <div class="banner" style="background: linear-gradient(135deg, #ec4899, #f43f5e);">
+        <h2>Our 5 Magic Senses 🪄</h2>
+        <p>Our sense organs help us explore, understand, and enjoy the wonderful world around us!</p>
+      </div>
+
+      <div class="cards-grid">
+        <!-- Sense 1: Eyes -->
+        <div class="card-item" onclick="speakText('Eyes give us the sense of sight! We see colors, shapes, and read books with our eyes.')">
+          <div class="card-item-top">
+            <div class="card-badge" style="background:#dbeafe;">👀</div>
+            <div>
+              <h3>Eyes</h3>
+              <span class="subtitle">Sense of Sight</span>
+            </div>
+          </div>
+          <p>Your eyes let you see everything from a tiny butterfly to tall mountains, bright colors, and your friends' smiles!</p>
+          <div class="kid-tip">💡 Tip: Blink often and rest your eyes when reading or looking at a screen!</div>
+          <button class="listen-mini-btn"><span>🔊</span> Listen</button>
+        </div>
+
+        <!-- Sense 2: Ears -->
+        <div class="card-item" onclick="speakText('Ears give us the sense of hearing! We hear music, rain, and voices with our ears.')">
+          <div class="card-item-top">
+            <div class="card-badge" style="background:#fef3c7;">👂</div>
+            <div>
+              <h3>Ears</h3>
+              <span class="subtitle">Sense of Hearing</span>
+            </div>
+          </div>
+          <p>Ears catch sound waves so you can enjoy your favorite songs, listen to teacher stories, and hear warning horns.</p>
+          <div class="kid-tip">💡 Tip: Never put sharp objects or pencils inside your ears!</div>
+          <button class="listen-mini-btn"><span>🔊</span> Listen</button>
+        </div>
+
+        <!-- Sense 3: Nose -->
+        <div class="card-item" onclick="speakText('The nose gives us the sense of smell! It smells delicious food, flowers, and also helps us breathe.')">
+          <div class="card-item-top">
+            <div class="card-badge" style="background:#dcfce7;">👃</div>
+            <div>
+              <h3>Nose</h3>
+              <span class="subtitle">Sense of Smell</span>
+            </div>
+          </div>
+          <p>Your nose smells yummy baking cookies and sweet flowers. It also warms the air when you breathe in!</p>
+          <div class="kid-tip">💡 Tip: Your nose can remember thousands of different smells!</div>
+          <button class="listen-mini-btn"><span>🔊</span> Listen</button>
+        </div>
+
+        <!-- Sense 4: Tongue -->
+        <div class="card-item" onclick="speakText('The tongue gives us the sense of taste! It helps us taste sweet, salty, sour, and bitter flavors.')">
+          <div class="card-item-top">
+            <div class="card-badge" style="background:#fee2e2;">👅</div>
+            <div>
+              <h3>Tongue</h3>
+              <span class="subtitle">Sense of Taste</span>
+            </div>
+          </div>
+          <p>Tiny taste buds on your tongue help you taste sweet mangoes, salty popcorn, and sour lemons. It also helps you talk!</p>
+          <div class="kid-tip">💡 Tip: Clean your tongue gently with a toothbrush every day.</div>
+          <button class="listen-mini-btn"><span>🔊</span> Listen</button>
+        </div>
+
+        <!-- Sense 5: Skin -->
+        <div class="card-item" onclick="speakText('Skin covers our whole body and gives us the sense of touch! It feels hot, cold, soft, and rough.')">
+          <div class="card-item-top">
+            <div class="card-badge" style="background:#e0e7ff;">✋</div>
+            <div>
+              <h3>Skin</h3>
+              <span class="subtitle">Sense of Touch</span>
+            </div>
+          </div>
+          <p>Skin is the biggest organ of your entire body! It lets you feel a fluffy blanket, cold ice cubes, and warm sunshine.</p>
+          <div class="kid-tip">💡 Tip: Wash your hands with soap to keep germs away from your skin!</div>
+          <button class="listen-mini-btn"><span>🔊</span> Listen</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: INSIDE MY BODY -->
+    <section id="tab-organs" class="tab-content">
+      <div class="banner" style="background: linear-gradient(135deg, #10b981, #059669);">
+        <h2>Inside My Body: The Super Organs! 🫀</h2>
+        <p>Even though we can't see them, these special organs work 24/7 like super-heroes to keep us alive and healthy!</p>
+      </div>
+
+      <div class="cards-grid">
+        <!-- Brain -->
+        <div class="card-item" onclick="speakText('The Brain is the master computer of your body! It controls thinking, memory, and movements.')">
+          <div class="card-item-top">
+            <div class="card-badge" style="background:#fce7f3;">🧠</div>
+            <div>
+              <h3>The Brain</h3>
+              <span class="subtitle">The Master Computer</span>
+            </div>
+          </div>
+          <p>Protected inside your skull, the brain tells your hands to write, remembers your friends' names, and helps you learn math!</p>
+          <div class="kid-tip">⭐ Super Fact: When you sleep, your brain organizes memories like a tidy library!</div>
+          <button class="listen-mini-btn"><span>🔊</span> Listen</button>
+        </div>
+
+        <!-- Heart -->
+        <div class="card-item" onclick="speakText('The Heart is a super pump! It beats continuously to pump blood all over your body.')">
+          <div class="card-item-top">
+            <div class="card-badge" style="background:#ffe4e6;">❤️</div>
+            <div>
+              <h3>The Heart</h3>
+              <span class="subtitle">The Blood Pump</span>
+            </div>
+          </div>
+          <p>Your heart is about the size of your clenched fist. It goes <em>thump-thump</em> without resting, sending blood everywhere!</p>
+          <div class="kid-tip">⭐ Super Fact: Your heart beats about 100,000 times in a single day!</div>
+          <button class="listen-mini-btn"><span>🔊</span> Listen</button>
+        </div>
+
+        <!-- Lungs -->
+        <div class="card-item" onclick="speakText('The Lungs are two breathing air balloons! They take in fresh oxygen when you inhale.')">
+          <div class="card-item-top">
+            <div class="card-badge" style="background:#e0f2fe;">🫁</div>
+            <div>
+              <h3>The Lungs</h3>
+              <span class="subtitle">The Air Balloons</span>
+            </div>
+          </div>
+          <p>Located in your chest, your two lungs expand like balloons when you inhale fresh oxygen, and shrink when you blow out!</p>
+          <div class="kid-tip">⭐ Super Fact: Taking deep breaths helps you feel calm and happy!</div>
+          <button class="listen-mini-btn"><span>🔊</span> Listen</button>
+        </div>
+
+        <!-- Stomach -->
+        <div class="card-item" onclick="speakText('The Stomach is a food blender! It churns your meals and breaks food down into energy.')">
+          <div class="card-item-top">
+            <div class="card-badge" style="background:#fef3c7;">🥣</div>
+            <div>
+              <h3>The Stomach</h3>
+              <span class="subtitle">The Food Blender</span>
+            </div>
+          </div>
+          <p>After you swallow food, it lands in your stomach. Special juices churn the food into liquid so your body gets power to play!</p>
+          <div class="kid-tip">⭐ Super Fact: Chew food slowly to help your stomach digest easily!</div>
+          <button class="listen-mini-btn"><span>🔊</span> Listen</button>
+        </div>
+
+        <!-- Bones & Skeleton -->
+        <div class="card-item" onclick="speakText('The Skeleton is made of 206 bones! It gives our body shape and protects our soft organs.')">
+          <div class="card-item-top">
+            <div class="card-badge" style="background:#f1f5f9;">🦴</div>
+            <div>
+              <h3>Bones & Skeleton</h3>
+              <span class="subtitle">The Strong Frame</span>
+            </div>
+          </div>
+          <p>Without bones, you would be as wobbly as a bowl of jelly! Bones give you shape, support you, and let you stand tall.</p>
+          <div class="kid-tip">⭐ Super Fact: Milk, cheese, and sunshine help make your bones rock solid!</div>
+          <button class="listen-mini-btn"><span>🔊</span> Listen</button>
+        </div>
+
+        <!-- Muscles -->
+        <div class="card-item" onclick="speakText('Muscles are the power movers! They pull your bones so you can run, jump, and smile.')">
+          <div class="card-item-top">
+            <div class="card-badge" style="background:#ffedd5;">💪</div>
+            <div>
+              <h3>Muscles</h3>
+              <span class="subtitle">The Power Movers</span>
+            </div>
+          </div>
+          <p>You have over 600 muscles! Whenever you smile, jump, run, or write your name, muscles are pulling your bones to move.</p>
+          <div class="kid-tip">⭐ Super Fact: It takes 43 muscles to frown, but only 17 to smile! So keep smiling!</div>
+          <button class="listen-mini-btn"><span>🔊</span> Listen</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: QUIZ GAME -->
+    <section id="tab-quiz" class="tab-content">
+      <div class="banner" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+        <h2>Test Your Super Body Brain! 🎮</h2>
+        <p>Answer the fun questions below to earn your Gold Star Champion badge!</p>
+      </div>
+
+      <div class="quiz-card">
+        <div class="quiz-header">
+          <div class="quiz-progress" id="quizProgress">Question 1 of 5</div>
+          <div class="quiz-score-pill">⭐ Score: <span id="quizScore">0</span></div>
+        </div>
+
+        <div class="quiz-question" id="quizQuestion">
+          Loading question...
+        </div>
+
+        <div class="quiz-options" id="quizOptions">
+          <!-- Dynamic Buttons -->
+        </div>
+
+        <div class="quiz-feedback" id="quizFeedback"></div>
+
+        <button class="quiz-next-btn" id="quizNextBtn" style="display:none;" onclick="nextQuestion()">
+          Next Question ➡️
+        </button>
+      </div>
+    </section>
+
+    <!-- TAB 5: HEALTHY HABITS -->
+    <section id="tab-habits" class="tab-content">
+      <div class="banner" style="background: linear-gradient(135deg, #0ea5e9, #2563eb);">
+        <h2>Super-Kid Daily Health Checklist! 🍎</h2>
+        <p>Click each healthy habit you completed or promise to do today. Collect all 6 checkmarks to unlock the Golden Medal!</p>
+      </div>
+
+      <div class="habits-grid">
+        <div class="habit-card" onclick="toggleHabit(this)">
+          <div class="habit-checkbox">✓</div>
+          <div class="habit-text">
+            <h4>💧 Drink Water</h4>
+            <p>Drink 6 to 8 glasses of fresh water daily.</p>
+          </div>
+        </div>
+
+        <div class="habit-card" onclick="toggleHabit(this)">
+          <div class="habit-checkbox">✓</div>
+          <div class="habit-text">
+            <h4>🧼 Wash Your Hands</h4>
+            <p>Scrub with soap before eating and after play.</p>
+          </div>
+        </div>
+
+        <div class="habit-card" onclick="toggleHabit(this)">
+          <div class="habit-checkbox">✓</div>
+          <div class="habit-text">
+            <h4>🪥 Brush Teeth Twice</h4>
+            <p>Brush morning and night for shining teeth.</p>
+          </div>
+        </div>
+
+        <div class="habit-card" onclick="toggleHabit(this)">
+          <div class="habit-checkbox">✓</div>
+          <div class="habit-text">
+            <h4>🥦 Eat Green Veggies & Fruits</h4>
+            <p>Gives power to your muscles and brain.</p>
+          </div>
+        </div>
+
+        <div class="habit-card" onclick="toggleHabit(this)">
+          <div class="habit-checkbox">✓</div>
+          <div class="habit-text">
+            <h4>🏃 Play Outside & Exercise</h4>
+            <p>Run, dance, or jump for at least 30 minutes.</p>
+          </div>
+        </div>
+
+        <div class="habit-card" onclick="toggleHabit(this)">
+          <div class="habit-checkbox">✓</div>
+          <div class="habit-text">
+            <h4>😴 Sleep 9 Hours</h4>
+            <p>Helps your body grow taller and recharge.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stars-reward" id="rewardBox">
+        <h3 id="rewardTitle">Keep Checking! 🌟</h3>
+        <p id="rewardDesc">Check off all items above to earn the Super Health Champion Medal!</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>🌟 Made with ❤️ for Class 3 Science Students • Keep Learning & Growing Strong! 🌟</p>
+  </footer>
+
+  <script>
+    // Body Parts Data
+    const bodyData = {
+      head: {
+        name: "Head",
+        category: "Top of the Body",
+        icon: "🧠",
+        desc: "The head holds your brain, eyes, ears, nose, and mouth! It sits at the top of your neck and keeps your thinking organ safe inside a strong skull.",
+        fact: "Your brain inside your head sends messages faster than a speedy sports car!",
+        action: "Gently touch the top of your head and nod 3 times to say hello!"
+      },
+      eyes: {
+        name: "Eyes (Sense of Sight)",
+        category: "Sense Organ",
+        icon: "👀",
+        desc: "Your two eyes let you see everything around you! They catch light and let you see colors, shapes, letters, and your friends.",
+        fact: "You blink about 15 to 20 times every minute without even thinking about it!",
+        action: "Blink both of your eyes quickly 5 times! Blink, blink, blink!"
+      },
+      ears: {
+        name: "Ears (Sense of Hearing)",
+        category: "Sense Organ",
+        icon: "👂",
+        desc: "Your ears catch sounds from the air! They help you hear your teacher, listen to music, and hear birds chirping in the morning.",
+        fact: "Your ears also help you balance so you don't fall over when you hop!",
+        action: "Cup your hands behind your ears and listen closely to the quietest sound around you!"
+      },
+      nose: {
+        name: "Nose (Sense of Smell)",
+        category: "Sense Organ",
+        icon: "👃",
+        desc: "Your nose lets you smell nice things like yummy food and flowers. It also takes in fresh air when you breathe!",
+        fact: "Your nose warms up cold air before it travels down into your lungs!",
+        action: "Take a big, deep breath in through your nose... and slowly blow it out through your mouth!"
+      },
+      mouth: {
+        name: "Mouth & Teeth",
+        category: "Face & Digestion",
+        icon: "👄",
+        desc: "Your mouth has teeth to chew food and a tongue to taste and speak! It also gives the world your beautiful smile.",
+        fact: "Enamel on your teeth is the hardest substance in your entire body!",
+        action: "Show a big, happy smile and count your top front teeth with your tongue!"
+      },
+      chest: {
+        name: "Chest (Heart & Lungs)",
+        category: "Upper Torso",
+        icon: "🫀",
+        desc: "Your chest protects your super-pump Heart and your breathing Lungs behind strong bones called ribs.",
+        fact: "Put your hand on your left chest. That thump-thump is your heart pumping blood!",
+        action: "Place your right hand over your left chest and feel your heartbeat!"
+      },
+      stomach: {
+        name: "Stomach",
+        category: "Digestive System",
+        icon: "🥣",
+        desc: "The stomach receives the food you swallow. It acts like a powerful mixer, blending food with juices to give you energy to play!",
+        fact: "Food stays in your stomach for 2 to 4 hours while getting digested!",
+        action: "Gently pat your tummy in circles like you just ate a delicious healthy lunch!"
+      },
+      hands: {
+        name: "Hands & Arms",
+        category: "Upper Limbs",
+        icon: "✋",
+        desc: "Each hand has 5 fingers. Your hands let you write, draw, clap, hold toys, and give friendly high-fives!",
+        fact: "Every person has unique fingerprints—no one else in the world has prints like yours!",
+        action: "Clap your hands 3 times and wiggle all 10 fingers as fast as you can!"
+      },
+      knees: {
+        name: "Knees & Legs",
+        category: "Lower Limbs",
+        icon: "🦵",
+        desc: "Your legs carry your whole body, and your knee joints bend so you can sit down on a chair, run, and jump!",
+        fact: "The longest bone in your body is the femur bone inside your thigh!",
+        action: "Stand up and gently bend your knees to do 2 mini squats!"
+      },
+      feet: {
+        name: "Feet & Toes",
+        category: "Base of the Body",
+        icon: "👟",
+        desc: "Your feet balance your entire body when standing and give you push-off power when walking and running.",
+        fact: "Both of your feet together contain 52 bones—almost a quarter of all bones in your body!",
+        action: "Wiggle your toes inside your shoes or socks!"
+      }
+    };
+
+    let currentSelectedPart = 'head';
+    let voiceEnabled = true;
+
+    // Speech narration function
+    function speakText(text) {
+      if (!voiceEnabled || !('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel(); // Stop any ongoing speech
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 0.9; // Friendly, clear pace for kids
+      utterance.pitch = 1.1; // Cheerful friendly tone
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function toggleVoice() {
+      voiceEnabled = !voiceEnabled;
+      const btn = document.getElementById('voiceToggleBtn');
+      const icon = document.getElementById('voiceIcon');
+      const status = document.getElementById('voiceStatus');
+      
+      if (voiceEnabled) {
+        btn.classList.add('active');
+        icon.textContent = '🔊';
+        status.textContent = 'Sound: ON';
+        speakText('Sound is turned on!');
+      } else {
+        btn.classList.remove('active');
+        icon.textContent = '🔇';
+        status.textContent = 'Sound: OFF';
+        window.speechSynthesis.cancel();
+      }
+    }
+
+    // Select body part in explorer
+    function selectPart(key) {
+      const data = bodyData[key];
+      if (!data) return;
+      currentSelectedPart = key;
+
+      document.getElementById('detailName').textContent = data.name;
+      document.getElementById('detailCategory').textContent = data.category;
+      document.getElementById('detailIcon').textContent = data.icon;
+      document.getElementById('detailDesc').textContent = data.desc;
+      document.getElementById('detailFact').textContent = data.fact;
+      document.getElementById('detailAction').textContent = data.action;
+
+      // Update pills active state
+      document.querySelectorAll('.pill-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase().includes(key));
+      });
+
+      // Speak part info
+      speakText(`${data.name}. ${data.desc}`);
+    }
+
+    function speakCurrent() {
+      const data = bodyData[currentSelectedPart];
+      if (data) {
+        speakText(`${data.name}. ${data.desc}. Fun fact: ${data.fact}. ${data.action}`);
+      }
+    }
+
+    // Navigation Tabs
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+      const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => 
+        b.getAttribute('onclick').includes(tabId)
+      );
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const targetContent = document.getElementById('tab-' + tabId);
+      if (targetContent) {
+        targetContent.classList.add('active');
+      }
+
+      if (tabId === 'quiz') {
+        initQuiz();
+      }
+    }
+
+    // Quiz Questions Data (Class 3 level)
+    const quizQuestions = [
+      {
+        q: "Which sense organ helps you taste sweet chocolate and ice cream?",
+        options: ["Nose 👃", "Tongue 👅", "Ears 👂", "Eyes 👀"],
+        correct: 1,
+        explanation: "Super job! The tongue has taste buds that taste sweet, salty, sour, and bitter foods!"
+      },
+      {
+        q: "Which super organ beats thump-thump and pumps blood all over your body?",
+        options: ["Heart ❤️", "Stomach 🥣", "Brain 🧠", "Knee 🦵"],
+        correct: 0,
+        explanation: "Bingo! Your heart works day and night pumping healthy blood everywhere!"
+      },
+      {
+        q: "What protects your brain inside your head?",
+        options: ["Ribs 🦴", "Skull 💀", "Shoes 👟", "Stomach 🥣"],
+        correct: 1,
+        explanation: "Correct! The skull is a hard bone helmet that keeps your brain safe!"
+      },
+      {
+        q: "When you take a deep breath, which organs fill up with air like balloons?",
+        options: ["Ears 👂", "Lungs 🫁", "Hands ✋", "Teeth 🦷"],
+        correct: 1,
+        explanation: "Awesome! Your two lungs take in fresh oxygen when you breathe in!"
+      },
+      {
+        q: "How many bones are in an adult human skeleton?",
+        options: ["50 bones", "100 bones", "206 bones", "500 bones"],
+        correct: 2,
+        explanation: "Spot on! There are 206 bones that give our body strength and shape!"
+      }
+    ];
+
+    let currentQIndex = 0;
+    let quizScore = 0;
+    let answered = false;
+
+    function initQuiz() {
+      currentQIndex = 0;
+      quizScore = 0;
+      answered = false;
+      document.getElementById('quizScore').textContent = '0';
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      answered = false;
+      const q = quizQuestions[currentQIndex];
+      document.getElementById('quizProgress').textContent = `Question ${currentQIndex + 1} of ${quizQuestions.length}`;
+      document.getElementById('quizQuestion').textContent = q.q;
+
+      const optsContainer = document.getElementById('quizOptions');
+      optsContainer.innerHTML = '';
+
+      const feedback = document.getElementById('quizFeedback');
+      feedback.style.display = 'none';
+      feedback.className = 'quiz-feedback';
+
+      document.getElementById('quizNextBtn').style.display = 'none';
+
+      // Read question aloud
+      speakText(q.q);
+
+      q.options.forEach((optText, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-opt-btn';
+        btn.innerHTML = `<span>${String.fromCharCode(65 + idx)}.</span> ${optText}`;
+        btn.onclick = () => selectQuizAnswer(idx);
+        optsContainer.appendChild(btn);
+      });
+    }
+
+    function selectQuizAnswer(chosenIdx) {
+      if (answered) return;
+      answered = true;
+
+      const q = quizQuestions[currentQIndex];
+      const buttons = document.querySelectorAll('.quiz-opt-btn');
+      const feedback = document.getElementById('quizFeedback');
+
+      if (chosenIdx === q.correct) {
+        quizScore += 10;
+        document.getElementById('quizScore').textContent = quizScore;
+        buttons[chosenIdx].classList.add('correct');
+        feedback.textContent = `🎉 Correct! ${q.explanation}`;
+        feedback.className = 'quiz-feedback show-correct';
+        speakText(`Correct! ${q.explanation}`);
+      } else {
+        buttons[chosenIdx].classList.add('wrong');
+        buttons[q.correct].classList.add('correct');
+        feedback.textContent = `💡 Good try! The correct answer was ${q.options[q.correct]}. ${q.explanation}`;
+        feedback.className = 'quiz-feedback show-wrong';
+        speakText(`Good try! The answer is ${q.options[q.correct]}`);
+      }
+
+      document.getElementById('quizNextBtn').style.display = 'block';
+    }
+
+    function nextQuestion() {
+      currentQIndex++;
+      if (currentQIndex < quizQuestions.length) {
+        loadQuestion();
+      } else {
+        showQuizResults();
+      }
+    }
+
+    function showQuizResults() {
+      const qCard = document.querySelector('.quiz-card');
+      const maxScore = quizQuestions.length * 10;
+      let trophy = '🏆';
+      let message = 'You are a Body Science Super Star!';
+      
+      if (quizScore < 30) {
+        trophy = '🌟';
+        message = 'Great effort! Explore more and try again!';
+      }
+
+      qCard.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+          <div style="font-size: 4rem; animation: float 2s infinite;">${trophy}</div>
+          <h2 style="font-size: 2rem; color: #1e293b; margin: 12px 0;">Quiz Completed!</h2>
+          <p style="font-size: 1.3rem; color: #3b82f6; font-weight: bold;">Your Score: ${quizScore} / ${maxScore} points!</p>
+          <p style="font-size: 1.1rem; color: #475569; margin: 14px 0;">${message}</p>
+          <button class="quiz-next-btn" onclick="resetQuiz()" style="display:inline-block; margin-top:16px;">
+            🔄 Play Again!
+          </button>
+        </div>
+      `;
+      speakText(`Quiz finished! You scored ${quizScore} points! ${message}`);
+    }
+
+    function resetQuiz() {
+      location.reload();
+    }
+
+    // Health Habits Checklist
+    let completedHabits = 0;
+    function toggleHabit(card) {
+      card.classList.toggle('completed');
+      const allCards = document.querySelectorAll('.habit-card');
+      const checkedCards = document.querySelectorAll('.habit-card.completed');
+      completedHabits = checkedCards.length;
+
+      const rewardTitle = document.getElementById('rewardTitle');
+      const rewardDesc = document.getElementById('rewardDesc');
+
+      if (completedHabits === allCards.length) {
+        rewardTitle.textContent = '🥇 GOLD MEDAL UNLOCKED! 🌟';
+        rewardDesc.textContent = 'Superstar! You are taking awesome care of your amazing human body!';
+        speakText('Hooray! Gold Medal Unlocked! You are taking awesome care of your body!');
+      } else {
+        rewardTitle.textContent = `${completedHabits} of ${allCards.length} Habits Completed! ⭐`;
+        rewardDesc.textContent = `Check off ${allCards.length - completedHabits} more habit(s) to unlock the Gold Medal!`;
+      }
+    }
+
+    // Initial greeting
+    window.addEventListener('DOMContentLoaded', () => {
+      // Welcome voice prompt on first click
+      document.body.addEventListener('click', function firstGreet() {
+        speakText('Welcome to My Amazing Body! Touch and explore the body parts!');
+        document.body.removeEventListener('click', firstGreet);
+      }, { once: true });
+    });
+  </script>
+</body>
+</html>
